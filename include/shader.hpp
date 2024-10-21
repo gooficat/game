@@ -1,8 +1,9 @@
-#pragma once
+#ifndef SHADER_HPP
+#define SHADER_HPP
 
 #include <string>
 
-#include <GL/glew.h>
+#include "glad/glad.h"
 
 struct Shader {
     unsigned ID;
@@ -10,3 +11,5 @@ struct Shader {
     void use();
     ~Shader();
 };
+
+#endif
