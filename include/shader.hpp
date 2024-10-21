@@ -2,7 +2,7 @@
 #define SHADER_HPP
 
 #include <string>
-
+#include <iostream>
 #include "glad/glad.h"
 
 struct Shader {

@@ -13,12 +13,12 @@ layout (location = 0) in vec3 aPos;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
-int main() {
+void main() {
     gl_Position = projection * view * model * vec4(aPos, 1.0);
 })";
 const char* defaultShaderFrag = R"(#version 330 core
 out vec4 color;
-int main() {
+void main() {
     color = vec4(1.0f, 0.0f, 1.0f, 1.0f);
 })";
 
@@ -45,11 +45,11 @@ int main()
 
     cam.position.z = 5.0f;
     glViewport(0, 0, 960, 480);
-    glClearColor(1.0f, 0.2f, 0.2f, 1.0f);
+    glClearColor(0.0f, 0.2f, 0.2f, 1.0f);
 
     while(!glfwWindowShouldClose(window)) {
         glfwPollEvents();
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         defaultShader.use();
         cam.use(defaultShader);
         triangle.draw(defaultShader);
