@@ -15,6 +15,10 @@ Shader::Shader(const char* vertexSource, const char* fragmentSource) {
     glDeleteShader(frag);
 }
 
+void Shader::use() {
+    glUseProgram(ID);
+}
+
 Shader::~Shader() {
     glDeleteProgram(ID);
 }

@@ -4,18 +4,22 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "mesh.hpp"
 #include "shader.hpp"
+#include "mesh.hpp"
+#include "camera.hpp"
 
 const char* defaultShaderVert = R"(#version 330 core
 layout(location = 0) in vec3 aPos;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
 int main() {
-    gl_Position = vec4(aPos, 1.0);
+    gl_Position = projection * view * model * vec4(aPos, 1.0);
 })";
-const char* defaultShaderFrag = R"(#verion 330 core
+const char* defaultShaderFrag = R"(#version 330 core
 out vec4 color;
 int main() {
-    color = vec4(0.0f, 1.0f, 0.0f, 1.0f);
+    color = vec4(1.0f, 0.0f, 1.0f, 1.0f);
 })";
 
 std::vector<float> triangleVerts = {
@@ -33,14 +37,18 @@ int main()
     glewInit();
 
     Shader defaultShader(defaultShaderVert, defaultShaderFrag);
-
+    Camera cam(1.5f, 9.6f/4.8f, 0.1f, 100.0f);
     Mesh triangle(triangleVerts, triangleInds);
 
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    cam.position.z = 5.0f;
+
+    glClearColor(1.0f, 0.2f, 0.2f, 1.0f);
 
     while(!glfwWindowShouldClose(window)) {
         glfwPollEvents();
-        
+
+        defaultShader.use();
+        cam.use(defaultShader);
         triangle.draw(defaultShader);
 
         glfwSwapBuffers(window);
